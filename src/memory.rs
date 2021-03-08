@@ -189,6 +189,9 @@ impl<T> Buffer<T> {
     }
 }
 
+unsafe impl<T: Send> Send for Buffer<T> {}
+unsafe impl<T: Sync> Sync for Buffer<T> {}
+
 /// An OpenCL image.  
 /// Has methods to return information from calls to clGetImageInfo with the
 /// appropriate parameters.  
@@ -330,6 +333,9 @@ impl Image {
     }
 }
 
+unsafe impl Send for Image {}
+unsafe impl Sync for Image {}
+
 /// An OpenCL sampler.  
 /// Has methods to return information from calls to clGetSamplerInfo with the
 /// appropriate parameters.  
@@ -376,6 +382,9 @@ impl Sampler {
         self.sampler
     }
 }
+
+unsafe impl Send for Sampler {}
+unsafe impl Sync for Sampler {}
 
 /// An OpenCL pipe.  
 /// Has methods to return information from calls to clGetPipeInfo with the
@@ -425,3 +434,6 @@ impl Pipe {
         Ok(value.to_vec_intptr())
     }
 }
+
+unsafe impl Send for Pipe {}
+unsafe impl Sync for Pipe {}
