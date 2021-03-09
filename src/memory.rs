@@ -93,6 +93,13 @@ pub struct Buffer<T> {
     _type: PhantomData<T>,
 }
 
+impl<T> Clone for Buffer<T> {
+    fn clone(&self) -> Buffer<T> {
+        memory::retain_mem_object(self.buffer).unwrap();
+        Buffer::new(self.buffer)
+    }
+}
+
 impl<T> Drop for Buffer<T> {
     fn drop(&mut self) {
         memory::release_mem_object(self.buffer).expect("Error: clReleaseMemObject");
@@ -198,6 +205,13 @@ unsafe impl<T: Sync> Sync for Buffer<T> {}
 /// Implements the Drop trait to call release_mem_object when the object is dropped.
 pub struct Image {
     image: cl_mem,
+}
+
+impl Clone for Image {
+    fn clone(&self) -> Image {
+        memory::retain_mem_object(self.image).unwrap();
+        Image::new(self.image)
+    }
 }
 
 impl Drop for Image {
@@ -344,6 +358,13 @@ pub struct Sampler {
     sampler: cl_sampler,
 }
 
+impl Clone for Sampler {
+    fn clone(&self) -> Sampler {
+        sampler::retain_sampler(self.sampler).unwrap();
+        Sampler::new(self.sampler)
+    }
+}
+
 impl Drop for Sampler {
     fn drop(&mut self) {
         sampler::release_sampler(self.sampler).expect("Error: clReleaseSampler");
@@ -392,6 +413,13 @@ unsafe impl Sync for Sampler {}
 /// Implements the Drop trait to call release_mem_object when the object is dropped.
 pub struct Pipe {
     pipe: cl_mem,
+}
+
+impl Clone for Pipe {
+    fn clone(&self) -> Pipe {
+        memory::retain_mem_object(self.pipe).unwrap();
+        Pipe::new(self.pipe)
+    }
 }
 
 impl Drop for Pipe {
