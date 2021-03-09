@@ -87,6 +87,7 @@ pub fn get_mem_properties(memobj: cl_mem) -> Result<Vec<cl_ulong>, cl_int> {
 
 /// An OpenCL buffer.  
 /// Implements the Drop trait to call release_mem_object when the object is dropped.
+#[derive(Debug)]
 pub struct Buffer<T> {
     buffer: cl_mem,
     #[doc(hidden)]
@@ -203,6 +204,7 @@ unsafe impl<T: Sync> Sync for Buffer<T> {}
 /// Has methods to return information from calls to clGetImageInfo with the
 /// appropriate parameters.  
 /// Implements the Drop trait to call release_mem_object when the object is dropped.
+#[derive(Debug)]
 pub struct Image {
     image: cl_mem,
 }
@@ -354,6 +356,7 @@ unsafe impl Sync for Image {}
 /// Has methods to return information from calls to clGetSamplerInfo with the
 /// appropriate parameters.  
 /// Implements the Drop trait to call release_sampler when the object is dropped.
+#[derive(Debug)]
 pub struct Sampler {
     sampler: cl_sampler,
 }
@@ -411,6 +414,7 @@ unsafe impl Sync for Sampler {}
 /// Has methods to return information from calls to clGetPipeInfo with the
 /// appropriate parameters.  
 /// Implements the Drop trait to call release_mem_object when the object is dropped.
+#[derive(Debug)]
 pub struct Pipe {
     pipe: cl_mem,
 }

@@ -28,6 +28,7 @@ use std::mem;
 use std::ops::{Deref, DerefMut};
 use std::ptr;
 
+#[derive(Debug)]
 struct SvmRawVec<'a, T> {
     ptr: *mut T,
     cap: usize,

@@ -21,6 +21,7 @@ use libc::intptr_t;
 /// Has methods to return information from calls to clGetEventInfo and
 /// clGetEventProfilingInfo with the appropriate parameters.  
 /// Implements the Drop trait to call release_event when the object is dropped.
+#[derive(Debug)]
 pub struct Event {
     event: cl_event,
 }

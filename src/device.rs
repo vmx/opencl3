@@ -37,6 +37,7 @@ pub fn device_type_text(dev_type: cl_device_type) -> &'static str {
     }
 }
 
+#[derive(Debug)]
 pub struct SubDevice {
     id: cl_device_id,
 }
@@ -73,7 +74,7 @@ unsafe impl Sync for SubDevice {}
 /// [Device Queries](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#device-queries-table).
 // Root devices don't need to be reference counted for cloning, see:
 // https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#clRetainDevice
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct Device {
     id: cl_device_id,
 }

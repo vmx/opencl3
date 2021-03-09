@@ -24,6 +24,7 @@ use std::ptr;
 
 /// An OpenCL program object.  
 /// Implements the Drop trait to call release_program when the object is dropped.
+#[derive(Debug)]
 pub struct Program {
     program: cl_program,
 }

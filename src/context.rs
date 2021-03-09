@@ -40,6 +40,7 @@ use std::ptr;
 ///
 /// It implements the Drop trait which clears the collections of OpenCL objects
 /// so that they are released when the Context goes out of scope.
+#[derive(Debug)]
 pub struct Context {
     context: cl_context,
     devices: Vec<cl_device_id>,

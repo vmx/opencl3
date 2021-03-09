@@ -31,6 +31,7 @@ use std::ptr;
 /// It stores the number of arguments required by the kernel for the
 /// [ExecuteKernel] builder to verify kernel execution.  
 /// Implements the Drop trait to call release_kernel when the object is dropped.
+#[derive(Debug)]
 pub struct Kernel {
     kernel: cl_kernel,
     num_args: cl_uint,
@@ -270,6 +271,7 @@ unsafe impl Send for Kernel {}
 /// A struct that implements the [builder pattern](https://doc.rust-lang.org/1.0.0/style/ownership/builders.html)
 /// to simplify setting up [Kernel] arguments and the [NDRange](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#_mapping_work_items_onto_an_ndrange)
 /// when enqueueing a [Kernel] on a [CommandQueue].
+#[derive(Debug)]
 pub struct ExecuteKernel<'a> {
     pub kernel: &'a Kernel,
     pub global_work_offsets: Vec<size_t>,
