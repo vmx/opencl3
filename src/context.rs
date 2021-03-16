@@ -198,7 +198,20 @@ impl Context {
     ) -> Result<usize, cl_int> {
         let src_array = [src];
         let program = Program::create_from_source(self.context, &src_array)?;
-        program.build(&self.devices, &options)?;
+        program.build(&self.devices, &options).map_err(|error| {
+            println!(
+                "vmx: opencl3 context build_program_from_source: error: {:?}",
+                error
+            );
+
+            let build_log = program.get_build_log(self.devices()[0]);
+            println!(
+                "vmx: opencl3 context build_program_from_source: build_log:\n{}",
+                build_log.unwrap().to_string_lossy()
+            );
+
+            error
+        })?;
         self.add_program(program)
     }
 
