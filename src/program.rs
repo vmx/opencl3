@@ -305,6 +305,7 @@ impl Program {
         get_program_build_info(self.program, device, ProgramBuildInfo::CL_PROGRAM_BUILD_LOG)?
             .to_str()
             .or_else(|nul_error| {
+                println!("vmx: nul_error:\n{:?}", nul_error);
                 Ok(CString::new(
                     std::str::from_utf8(&nul_error.into_vec())
                         .unwrap()
