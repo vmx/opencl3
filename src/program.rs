@@ -304,7 +304,14 @@ impl Program {
     pub fn get_build_log(&self, device: cl_device_id) -> Result<CString, cl_int> {
         get_program_build_info(self.program, device, ProgramBuildInfo::CL_PROGRAM_BUILD_LOG)?
             .to_str()
-            .map_err(|_| error_codes::CSTRING_UTF8_CONVERSION_ERROR)
+            .or_else(|nul_error| {
+                Ok(CString::new(
+                    std::str::from_utf8(&nul_error.into_vec())
+                        .unwrap()
+                        .replace('\0', ""),
+                )
+                .unwrap())
+            })
     }
 
     pub fn get_build_binary_type(&self, device: cl_device_id) -> Result<cl_uint, cl_int> {
